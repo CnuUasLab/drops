@@ -43,7 +43,7 @@ To build and install the REST SDK do the following from the root of the project:
 cd lib/cpprestsdk/Release
 mkdir build.release
 cd build.release
-CXX=g++-4.8 cmake .. -DCMAKE_BUILD_TYPE=Release
+CXX=g++-4.8 cmake ../Release -DCMAKE_BUILD_TYPE=Release
 make
 sudo make install
 ```
