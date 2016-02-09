@@ -69,9 +69,17 @@ int main(int argc, char *argv[])
 
     env_data_t my_env_data = my_communicator.get_env_data();
 
-    std::cout << "Height:   " << my_env_data.height << std::endl;
-    std::cout << "Width:    " << my_env_data.width << std::endl;
+    std::cout << "Height:         " << my_env_data.height << std::endl;
+    std::cout << "Width:          " << my_env_data.width << std::endl;
+    std::cout << "Goal_x:         " << my_env_data.end_x << std::endl;
+    std::cout << "Goal_y:         " << my_env_data.end_y << std::endl;
+    std::cout << "Goal_theta:     " << my_env_data.end_theta << std::endl;
+    std::cout << "Location_x:     " << my_env_data.start_y << std::endl;
+    std::cout << "Location_y:     " << my_env_data.start_y << std::endl;
+    std::cout << "Location_theta: " << my_env_data.start_theta << std::endl;
     std::cout << "Time(ms): " << std::chrono::duration_cast<std::chrono::milliseconds>(elapsed).count() << std::endl;
+
+    // print_env(my_env_data);
 
     return 0;
 }
