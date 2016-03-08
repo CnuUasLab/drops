@@ -33,6 +33,10 @@ Planner::~Planner()
     m_planner = NULL;
 }
 
+/*
+ * Actually do the planning
+ * Returns 0 if path exists, else Planner::PATH_EXISTS
+ */
 int Planner::plan()
 {
 
@@ -65,6 +69,8 @@ int Planner::plan()
     xythetaPath.clear();
     m_env.ConvertStateIDPathintoXYThetaPath(&solution_IDs, &xythetaPath);
 
+    last_plan_good = path_exists;
+
     if(path_exists) {
         return Planner::PATH_EXISTS;
     } else {
@@ -73,6 +79,10 @@ int Planner::plan()
 
 }
 
+/*
+ * initialize the planner based on data give to us
+ * returns 0 on success, otherwise some error code
+ */
 int Planner::initialize(env_data_t &env_data, env_constants_t &env_const)
 {
     if(m_planner == NULL) {
@@ -82,8 +92,8 @@ int Planner::initialize(env_data_t &env_data, env_constants_t &env_const)
     }
     changed = true;
     bool ret = m_env.InitializeEnv(env_data.width, env_data.height, env_data.grid_2d,
-                                   env_data.start_x, env_data.start_y, env_data.start_theta,
-                                   env_data.end_x, env_data.end_y, env_data.end_y,
+                                   env_data.start_x, env_data.start_y, DEG_TO_RAD(env_data.start_theta),
+                                   env_data.end_x, env_data.end_y, DEG_TO_RAD(env_data.end_theta),
                                    0.0, 0.0, 0.0, //These params are unused
                                    perimeterptsV, env_const.cellsize_m,
                                    env_const.est_velocity, env_const.timetoturn45degs,
@@ -104,6 +114,9 @@ int Planner::initialize(env_data_t &env_data, env_constants_t &env_const)
     return 0;
 }
 
+/*
+ * Updates the dynamic points of the graph. Used for moving obstacles
+ */
 int Planner::update_grid_points(point_char_map &points)
 {
     nav2dcell_t nav2dcell;
@@ -118,6 +131,9 @@ int Planner::update_grid_points(point_char_map &points)
     return 0;
 }
 
+/*
+ * initialize the palnner. Should be called only once during construction
+ */
 int Planner::init_planner()
 {
     m_planner = new ADPlanner(&m_env, search_forward);
@@ -128,6 +144,9 @@ int Planner::init_planner()
     return 0;
 }
 
+/*
+ * used to set the start and end state for the planner.
+ */
 int Planner::set_planner_states(int start_state_id, int goal_state_id)
 {
     if(m_planner == NULL) {
@@ -140,4 +159,16 @@ int Planner::set_planner_states(int start_state_id, int goal_state_id)
         return 3;
     }
     return 0;
+}
+
+/*
+ * returns the path vector if good, otherwise an empty vector
+ */
+std::vector<sbpl_xy_theta_pt_t> Planner::get_path()
+{
+    if(last_plan_good) {
+        return xythetaPath;
+    } else {
+        return std::vector<sbpl_xy_theta_pt_t>();
+    }
 }
