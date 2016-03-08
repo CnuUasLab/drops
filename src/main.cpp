@@ -147,8 +147,8 @@ int main(int argc, char *argv[])
     env_constants_t my_env_const = my_communicator.get_const_data();
     point_char_map moveing_obs_pts = my_communicator.get_updated_points();
 
-    std::cout << "Height:         " << my_env_data.height << std::endl;
-    std::cout << "Width:          " << my_env_data.width << std::endl;
+    std::cout << "Height:   " << my_env_data.height << std::endl;
+    std::cout << "Width:    " << my_env_data.width << std::endl;
     std::cout << "Time(ms): " << std::chrono::duration_cast<std::chrono::milliseconds>(elapsed).count() << std::endl;
 
     print_env_const(my_env_const);
