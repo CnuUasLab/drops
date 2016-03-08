@@ -8,7 +8,6 @@ cache:
   - /usr/lib/ccache
   - lib/cpprestsdk/Release/tests
   - lib/cpprestsdk/Release/tests/CMakeFiles
-  - lib/cpprestsdk/Release/CMakeFiles
   - lib/cpprestsdk/Release/samples
 addons:
   apt:
@@ -41,7 +40,7 @@ before_install:
 - mkdir -p build.release
 - cd build.release
 - CXX=g++-4.8 cmake .. -DCMAKE_BUILD_TYPE=Release
-- make -j 4
+- make -j 2
 - sudo make install
 - cd ../../../../
 notifications:
