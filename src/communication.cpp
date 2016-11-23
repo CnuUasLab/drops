@@ -344,7 +344,7 @@ pplx::task<void> communicator::get_grid()
             //Obstacles to grid
             std::for_each(obstacles.begin(), obstacles.end(),
             [this, tmp_inf_params, height, width](obstacle_t obs) {
-                //Look through all the points in one quadrant of the circlep
+                //Look through all the points in one quadrant of the circle
                 for(int x = obs.x - obs.radius - tmp_inf_params.radius; x <= obs.x; x++) {
                     for(int y = obs.y - obs.radius - tmp_inf_params.radius; y <= obs.y; y++) {
                         unsigned char cost = calculate_cost(obs, x, y, tmp_inf_params);
